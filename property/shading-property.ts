@@ -2,134 +2,113 @@ import { Property } from './property';
 
 export class Shading extends Property{
 
-    /**
-     * Spacing above paragraph (twip)
-     *
-     * @var int|float
-     */
-    private $before;
+    value:Object;
 
     /**
-     * Spacing below paragraph (twip)
+     * Pattern readonlyants (partly)
      *
-     * @var int|float
+     * @readonly string
+     * @link http://www.schemacentral.com/sc/ooxml/t-w_ST_Shd.html
      */
-    private $after;
+    readonly PATTERN_CLEAR = 'clear'; // No pattern
+    readonly PATTERN_SOLID = 'solid'; // 100% fill pattern
+    readonly PATTERN_HSTRIPE = 'horzStripe'; // Horizontal stripe pattern
+    readonly PATTERN_VSTRIPE = 'vertStripe'; // Vertical stripe pattern
+    readonly PATTERN_DSTRIPE = 'diagStripe'; // Diagonal stripe pattern
+    readonly PATTERN_HCROSS = 'horzCross'; // Horizontal cross pattern
+    readonly PATTERN_DCROSS = 'diagCross'; // Diagonal cross pattern
 
-    /**
-     * Spacing between lines in paragraph (twip)
-     *
-     * @var int|float
-     */
-    private $line;
+    patternOptions:Array<string> = [
+        this.PATTERN_CLEAR,
+        this.PATTERN_SOLID,
+        this.PATTERN_HSTRIPE,
+        this.PATTERN_VSTRIPE,
+        this.PATTERN_DSTRIPE,
+        this.PATTERN_HCROSS,
+        this.PATTERN_DCROSS
+    ];
 
-    /**
-     * Type of spacing between lines
-     *
-     * @var string
-     */
-    private $rule = 'auto';
+    constructor(){
 
-    /**
-     * Create a new instance
-     *
-     * @param array $style
-     */
-    public function __construct($style = array())
-    {
-        $this->setStyleByArray($style);
+        super('shading');
+
+        this.value = {
+            pattern         : this.PATTERN_CLEAR,
+            color           : '',
+            fill            : '',
+
+        };
     }
 
-    /**
-     * Get before
-     *
-     * @return int|float
-     */
-    public function getBefore()
-    {
-        return $this->before;
-    }
 
     /**
-     * Set before
-     *
-     * @param int|float $value
-     * @return self
-     */
-    public function setBefore($value = null)
-    {
-        $this->before = $this->setNumericVal($value, $this->before);
-
-        return $this;
-    }
-
-    /**
-     * Get after
-     *
-     * @return int|float
-     */
-    public function getAfter()
-    {
-        return $this->after;
-    }
-
-    /**
-     * Set after
-     *
-     * @param int|float $value
-     * @return self
-     */
-    public function setAfter($value = null)
-    {
-        $this->after = $this->setNumericVal($value, $this->after);
-
-        return $this;
-    }
-
-    /**
-     * Get line
-     *
-     * @return int|float
-     */
-    public function getLine()
-    {
-        return $this->line;
-    }
-
-    /**
-     * Set distance
-     *
-     * @param int|float $value
-     * @return self
-     */
-    public function setLine($value = null)
-    {
-        $this->line = $this->setNumericVal($value, $this->line);
-
-        return $this;
-    }
-
-    /**
-     * Get line rule
+     * Get pattern
      *
      * @return string
      */
-    public function getRule()
+    public  getPattern():string
     {
-        return $this->rule;
+        return this.value['pattern'];
     }
 
     /**
-     * Set line rule
+     * Set pattern
      *
-     * @param string $value
+     * @param string value
      * @return self
      */
-    public function setRule($value = null)
+    public  setPattern(value:string = ''):Shading
     {
-        $this->rule = $value;
+        
+        this.value['pattern'] = this.setEnumValue(value, this.patternOptions, this.PATTERN_CLEAR);
 
-        return $this;
+        return this;
+    }
+
+    /**
+     * Get color
+     *
+     * @return string
+     */
+    public  getColor():string
+    {
+        return this.value['color'];
+    }
+
+    /**
+     * Set pattern
+     *
+     * @param string value
+     * @return self
+     */
+    public  setColor(value:string = ''):Shading
+    {
+        this.value['color'] = value;
+
+        return this;
+    }
+
+    /**
+     * Get fill
+     *
+     * @return string
+     */
+    public  getFill():string
+    {
+        return this.value['fill'];
+    }
+
+    /**
+     * Set fill
+     *
+     * @param string value
+     * @return self
+     */
+    public  setFill(value:string = ''):Shading
+    {
+        this.value['fill'] = value;
+
+        return this;
     }
 
 }

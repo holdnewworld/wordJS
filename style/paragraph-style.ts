@@ -124,10 +124,10 @@ export class ParagraphStyle extends Border{
                 this.pageBreakBefore    = new Property('pageBreakBefore', false);
                 this.numStyle           = new Property('numStyle');
                 this.numLevel           = new Property('numLevel', 0);
-                this.tabs               = new Property('tabs', new Array<Tab>());
-                this.shading            = new Property('shading', new Shading());
+                this.tabs               = [new Tab()];
+                this.shading            = new Shading();
                 this.indentation        = new Indentation();
-                this.spacing            = new Property('spacing', new Spacing());
+                this.spacing            = new Spacing();
         }
 
         public setProperty(property:Property){

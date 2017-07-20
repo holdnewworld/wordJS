@@ -8,7 +8,7 @@ export class Indentation extends Property{
     value:Object;
 
 
-     constructor(value = {}){
+     constructor(){
          super('indentation');
 
          this.value = {

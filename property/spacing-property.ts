@@ -13,7 +13,7 @@ export class Spacing extends Property{
      *
      * @param array style
      */
-    constructor(value={}){
+    constructor(){
         super('spacing');
 
         this.value = {
@@ -21,7 +21,7 @@ export class Spacing extends Property{
             after       : null,
             line        : null,
             rule        : 'auto'
-        }
+        };
     }
 
     /**
@@ -60,9 +60,8 @@ export class Spacing extends Property{
      * @param int|float value
      * @return self
      */
-    public  setAfter(value = null)
-    {
-        this->after = this->setNumericVal(value, this->after);
+    public  setAfter(value = null):Spacing    {
+        this.value['after'] = value;
 
         return this;
     }
@@ -72,9 +71,9 @@ export class Spacing extends Property{
      *
      * @return int|float
      */
-    public  getLine()
+    public  getLine():number
     {
-        return this->line;
+        return this.value['line'];
     }
 
     /**
@@ -83,9 +82,9 @@ export class Spacing extends Property{
      * @param int|float value
      * @return self
      */
-    public  setLine(value = null)
+    public  setLine(value:number = null):Spacing
     {
-        this->line = this->setNumericVal(value, this->line);
+        this.value['line'] = value;
 
         return this;
     }
@@ -95,9 +94,9 @@ export class Spacing extends Property{
      *
      * @return string
      */
-    public  getRule()
+    public  getRule():string
     {
-        return this->rule;
+        return this.value['rule'];
     }
 
     /**
@@ -106,9 +105,9 @@ export class Spacing extends Property{
      * @param string value
      * @return self
      */
-    public  setRule(value = null)
+    public  setRule(value:string = null):Spacing
     {
-        this->rule = value;
+        this.value['rule'] = value;
 
         return this;
     }
