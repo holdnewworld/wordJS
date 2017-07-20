@@ -2,35 +2,11 @@ import { Property } from './property';
 
 export class Indentation extends Property{
         
-        
+    /**
+     * value Object
+     */
     value:Object;
-    /**
-     * Left indentation (twip)
-     *
-     * @var Object | 
-     */
-    private left:number = 0;
 
-    /**
-     * Right indentation (twip)
-     *
-     * @var int|float
-     */
-    private right:number = 0;
-
-    /**
-     * Additional first line indentation (twip)
-     *
-     * @var int|float
-     */
-    private firstLine:number;
-
-    /**
-     * Indentation removed from first line (twip)
-     *
-     * @var int|float
-     */
-    private hanging:number;
 
      constructor(value = {}){
          super('indentation');
@@ -43,7 +19,7 @@ export class Indentation extends Property{
          }
 
      }
-        
+    
     /**
      * Get hanging
      *
