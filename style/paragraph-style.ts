@@ -1,9 +1,9 @@
 import { Property,  Alignment, Indentation, Spacing, Tab, Shading } from '../property/property';
 
-import { Border } from './style';
+import { BorderStyle } from './style';
 
 
-export class ParagraphStyle extends Border{
+export class ParagraphStyle extends BorderStyle{
         
         /**
          * @const int One line height equals 240 twip
@@ -191,7 +191,7 @@ export class ParagraphStyle extends Border{
          * @ignoreScrutinizerPatch
          * @return array
          */
-        public  getStyleValues(){
+        public  getStyleValues():Object{
 
                 let styles = {
                 'name'              : this.getPropertyValue('name'),

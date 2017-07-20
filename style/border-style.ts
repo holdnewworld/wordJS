@@ -1,74 +1,123 @@
-import { Property } from '../shared/shared';
+import { Property } from '../property/property';
 import { AbstractStyle } from './style';
 import * as _helper from '../helpers';
 
 /**
  * Border style
  */
-export class Border extends AbstractStyle{
+export class BorderStyle extends AbstractStyle{
     /**
      * Border Top Size
      *
      * @var int|float
      */
-    borderTopSize:number;
+    borderTopSize:Property;
 
     /**
      * Border Top Color
      *
      * @var string
      */
-    borderTopColor:string;
+    borderTopColor:Property;
 
     /**
      * Border Left Size
      *
      * @var int|float
      */
-    borderLeftSize:number;
+    borderLeftSize:Property;
 
     /**
      * Border Left Color
      *
      * @var string
      */
-    borderLeftColor:string;
+    borderLeftColor:Property;
 
     /**
      * Border Right Size
      *
      * @var int|float
      */
-    borderRightSize:number;
+    borderRightSize:Property;
 
     /**
      * Border Right Color
      *
      * @var string
      */
-    borderRightColor:string;
+    borderRightColor:Property;
 
     /**
      * Border Bottom Size
      *
      * @var int|float
      */
-    borderBottomSize:number;
+    borderBottomSize:Property;
 
     /**
      * Border Bottom Color
      *
      * @var string
      */
-    borderBottomColor:string;
+    borderBottomColor:Property;
 
     constructor(){
         super();
 
-        this.borderTopSize = 0;
-        this.borderRightSize = 0;
-        this.borderBottomSize = 0;
-        this.borderLeftSize = 0;
+        this.borderTopSize      = new Property('borderTopSize',0);
+        this.borderRightSize    = new Property('borderRightSize',0);
+        this.borderBottomSize   = new Property('borderBottomSize',0);
+        this.borderLeftSize     = new Property('borderLeftSize',0);
+
+        this.borderTopColor     = new Property('borderTopColor');
+        this.borderRightColor   = new Property('borderRightColor');
+        this.borderBottomColor  = new Property('borderBottomColor');
+        this.borderLeftColor    = new Property('borderLeftColor');
+
+    }
+
+    public setProperty(property:Property){
+            if(this.hasOwnProperty(property.getName())){
+                    this[property.getName()] = property;
+            }
+    }
+
+    public getProperty(propertyName:string):Property{
+            if(this.hasOwnProperty(propertyName)){
+                    return this[propertyName];
+            }else{
+                    return null;
+            }
+    }
+
+    /**
+     * Set Property value
+     *
+     * @param string key
+     * @param mixed value
+     * @return self
+     */
+    public  setPropertyValue(propertyName:string, value:any):Border{
+
+        if(this.hasOwnProperty(propertyName)){
+            this[propertyName].setValue(value);
+        }
+
+        return this;
+    }
+
+    /**
+     * Get Property Value
+     * 
+     * @param string propertyName 
+     */
+    public getPropertyValue(propertyName:string):any{
+            if(this.hasOwnProperty(propertyName)){
+                    return this[propertyName].getValue();
+            }else{
+                    return null;
+            }
     }
 
     /**
@@ -77,12 +126,13 @@ export class Border extends AbstractStyle{
      * @return integer[]
      */
     public getBorderSize():Array<number>{
-        return [
-            this.getBorderTopSize(),
-            this.getBorderLeftSize(),
-            this.getBorderRightSize(),
-            this.getBorderBottomSize(),
-        ];
+
+        let top:number      = this['borderTopSize'].getValue();
+        let right:number    = this['borderRightSize'].getValue();
+        let bottom:number   = this['borderBottomSize'].getValue();
+        let left:number     = this['borderLeftSize'].getValue();
+
+        return [ top, right, bottom, left ];
     }
 
     /**
@@ -92,10 +142,11 @@ export class Border extends AbstractStyle{
      * @return self
      */
     public setBorderSize(value:number=0):Border{
-        this.setBorderTopSize(value);
-        this.setBorderLeftSize(value);
-        this.setBorderRightSize(value);
-        this.setBorderBottomSize(value);
+        
+        this.setPropertyValue('borderTopSize',      value);
+        this.setPropertyValue('borderRightSize',    value);
+        this.setPropertyValue('borderBottomSize',   value);
+        this.setPropertyValue('borderLeftSize',     value);
 
         return this;
     }
@@ -106,12 +157,13 @@ export class Border extends AbstractStyle{
      * @return string[]
      */
     public  getBorderColor():Array<string>{
-        return [
-            this.getBorderTopColor(),
-            this.getBorderLeftColor(),
-            this.getBorderRightColor(),
-            this.getBorderBottomColor(),
-        ];
+
+        let top:string      = this.getProperty('borderTopColor').getValue();
+        let right:string    = this.getProperty('borderRightColor').getValue();
+        let bottom:string   = this.getProperty('borderBottomColor').getValue();
+        let left:string     = this.getProperty('borderLeftColor').getValue();
+        
+        return [ top, right, bottom, left ];
     }
 
     /**
@@ -121,178 +173,11 @@ export class Border extends AbstractStyle{
      * @return self
      */
     public  setBorderColor(value:string = '#000'):Border  {
-        this.setBorderTopColor(value);
-        this.setBorderLeftColor(value);
-        this.setBorderRightColor(value);
-        this.setBorderBottomColor(value);
-
-        return this;
-    }
-
-    /**
-     * Get border top size
-     *
-     * @return int|float
-     */
-    public  getBorderTopSize():number{
-        return this.borderTopSize;
-    }
-
-    /**
-     * Set border top size
-     *
-     * @param int|float value
-     * @return self
-     */
-    public  setBorderTopSize(value:number = 1):Border {
-        this.borderTopSize = this.setNumericVal(value, this.borderTopSize);
-
-        return this;
-    }
-
-    /**
-     * Get border top color
-     *
-     * @return string
-     */
-    public  getBorderTopColor():string {
-        return this.borderTopColor;
-    }
-
-    /**
-     * Set border top color
-     *
-     * @param string value
-     * @return self
-     */
-    public  setBorderTopColor(value = null):Border{
-        this.borderTopColor = value;
-
-        return this;
-    }
-
-    /**
-     * Get border left size
-     *
-     * @return int|float
-     */
-    public  getBorderLeftSize():number{
-        return this.borderLeftSize;
-    }
-
-    /**
-     * Set border left size
-     *
-     * @param int|float value
-     * @return self
-     */
-    public  setBorderLeftSize(value:number = 1):Border{
-        this.borderLeftSize = this.setNumericVal(value, this.borderLeftSize);
-
-        return this;
-    }
-
-    /**
-     * Get border left color
-     *
-     * @return string
-     */
-    public  getBorderLeftColor():string {
-        return this.borderLeftColor;
-    }
-
-    /**
-     * Set border left color
-     *
-     * @param string value
-     * @return self
-     */
-    public  setBorderLeftColor(value = null):Border{
-        this.borderLeftColor = value;
-
-        return this;
-    }
-
-    /**
-     * Get border right size
-     *
-     * @return int|float
-     */
-    public  getBorderRightSize():number{
-        return this.borderRightSize;
-    }
-
-    /**
-     * Set border right size
-     *
-     * @param int|float value
-     * @return self
-     */
-    public  setBorderRightSize(value = null):Border{
-        this.borderRightSize = this.setNumericVal(value, this.borderRightSize);
-
-        return this;
-    }
-
-    /**
-     * Get border right color
-     *
-     * @return string
-     */
-    public  getBorderRightColor():string{
-        return this.borderRightColor;
-    }
-
-    /**
-     * Set border right color
-     *
-     * @param string value
-     * @return self
-     */
-    public  setBorderRightColor(value = null):Border{
-        this.borderRightColor = value;
-
-        return this;
-    }
-
-    /**
-     * Get border bottom size
-     *
-     * @return int|float
-     */
-    public  getBorderBottomSize():number {
-        return this.borderBottomSize;
-    }
-
-    /**
-     * Set border bottom size
-     *
-     * @param int|float value
-     * @return self
-     */
-    public  setBorderBottomSize(value = null):Border{
-        this.borderBottomSize = this.setNumericVal(value, this.borderBottomSize);
-
-        return this;
-    }
-
-    /**
-     * Get border bottom color
-     *
-     * @return string
-     */
-    public  getBorderBottomColor():string{
-        return this.borderBottomColor;
-    }
-
-    /**
-     * Set border bottom color
-     *
-     * @param string value
-     * @return self
-     */
-    public  setBorderBottomColor(value = null):Border {
-        this.borderBottomColor = value;
+        
+        this.setPropertyValue('borderTopColor',      value);
+        this.setPropertyValue('borderRightColor',    value);
+        this.setPropertyValue('borderBottomColor',   value);
+        this.setPropertyValue('borderLeftColor',     value);
 
         return this;
     }

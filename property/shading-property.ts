@@ -18,7 +18,7 @@ export class Shading extends Property{
     readonly PATTERN_HCROSS = 'horzCross'; // Horizontal cross pattern
     readonly PATTERN_DCROSS = 'diagCross'; // Diagonal cross pattern
 
-    patternOptions:Array<string> = [
+    private patternOptions:Array<string> = [
         this.PATTERN_CLEAR,
         this.PATTERN_SOLID,
         this.PATTERN_HSTRIPE,

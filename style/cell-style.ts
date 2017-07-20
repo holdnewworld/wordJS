@@ -1,11 +1,11 @@
 
-import { Border } from './style';
+import { BorderStyle } from './style';
 import { Property, Shading } from '../property/property';
 
 /**
  * Table cell style
  */
-export class Cell extends Border{
+export class CellStyle extends BorderStyle{
     /**
      * Vertical alignment readonlyants
      *
@@ -38,6 +38,7 @@ export class Cell extends Border{
      */
     readonly VMERGE_RESTART = 'restart';
     readonly VMERGE_CONTINUE = 'continue';
+    vMergeOptions:Array<string> = [ this.VMERGE_CONTINUE, this.VMERGE_RESTART];
 
     /**
      * Default border color
@@ -91,6 +92,7 @@ export class Cell extends Border{
         this.textDirection = new Property('textDirection');
         this.gridSpan      = new Property('gridSpan');
         this.vMerge        = new Property('vMerge');
+        this.shading       = new Shading();
 
     }
 
@@ -116,7 +118,7 @@ export class Cell extends Border{
      * @param mixed value
      * @return self
      */
-    public  setPropertyValue(propertyName, value):Cell{
+    public  setPropertyValue(propertyName, value):CellStyle{
 
             if (propertyName == 'vAlign') {
 
@@ -124,15 +126,15 @@ export class Cell extends Border{
 
             } else if (propertyName == 'textDirection') {
                     this[propertyName].setEnumValue(value, this.textDirectionOptions, this.TEXT_DIR_BTLR);
-            }else if(propertyName == '')
-
-
-            if(this.hasOwnProperty(propertyName)){
+            }else if(propertyName == 'vMerge'){
+                this[propertyName].setEnumValue(value, this.vMergeOptions, this.VMERGE_CONTINUE);
+            }else{
+                if(this.hasOwnProperty(propertyName)){
                     this[propertyName].setValue(value);
+                }
             }
 
             return this;
-            
     }
 
     /**
@@ -169,89 +171,14 @@ export class Cell extends Border{
      * @param string value
      * @return self
      */
-    public  setBgColor(value = null)
-    {
-        return this.setShading(array('fill' => value));
-    }
-
-    /**
-     * Get grid span (colspan).
-     *
-     * @return integer
-     */
-    public  getGridSpan()
-    {
-        return this.gridSpan;
-    }
-
-    /**
-     * Set grid span (colspan)
-     *
-     * @param int value
-     * @return self
-     */
-    public  setGridSpan(value = null)
-    {
-        this.gridSpan = this.setIntVal(value, this.gridSpan);
-
-        return this;
-    }
-
-    /**
-     * Get vertical merge (rowspan).
-     *
-     * @return string
-     */
-    public  getVMerge()
-    {
-        return this.vMerge;
-    }
-
-    /**
-     * Set vertical merge (rowspan)
-     *
-     * @param string value
-     * @return self
-     */
-    public  setVMerge(value = null)
-    {
-        enum = array(self::VMERGE_RESTART, self::VMERGE_CONTINUE);
-        this.vMerge = this.setEnumVal(value, enum, this.vMerge);
-
-        return this;
-    }
-
-    /**
-     * Get shading
-     *
-     * @return \PhpOffice\PhpWord\Style\Shading
-     */
-    public  getShading()
-    {
-        return this.shading;
-    }
-
-    /**
-     * Set shading
-     *
-     * @param mixed value
-     * @return self
-     */
-    public  setShading(value = null)
-    {
-        this.setObjectVal(value, 'Shading', this.shading);
-
-        return this;
+    public  setBgColor(value:string = null):Shading{
+        return this.shading.setFill(value);
     }
 
     /**
      * Get default border color
-     *
-     * @deprecated 0.10.0
-     * @codeCoverageIgnore
      */
-    public  getDefaultBorderColor()
-    {
-        return self::DEFAULT_BORDER_COLOR;
+    public  getDefaultBorderColor() {
+        return this.DEFAULT_BORDER_COLOR;
     }
 }

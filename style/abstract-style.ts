@@ -3,9 +3,9 @@ import { Property } from '../property/property';
 
 export abstract class AbstractStyle{
     
-    styleName:string;
-    index:number;
-    auto:boolean = false;
+    private styleName:string;
+    private index:number;
+    private auto:boolean = false;
 
     public abstract getPropertyValue(propertyName:string):any;
     public abstract setPropertyValue(propertyName:string, value:any):AbstractStyle;

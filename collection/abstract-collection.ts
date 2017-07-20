@@ -54,7 +54,7 @@ export class AbstractCollection{
                 if(index >-1 && index < this.items.length){
                         return this.items[index];
                 }else{
-                        return new AbstractCollection();
+                        return null;
                 }
         }
 
